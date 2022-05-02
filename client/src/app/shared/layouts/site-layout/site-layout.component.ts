@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-site-layout',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SiteLayoutComponent implements OnInit {
 
-  constructor() { }
+  email = null;
+
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
+    // @ts-ignore
+    this.email=localStorage.getItem('email');
   }
+
+  isAdmin() {
+    return this.auth.isAdmin();
+  }
+
+  logout() {
+    this.auth.logout();
+  }
+
+
 
 }

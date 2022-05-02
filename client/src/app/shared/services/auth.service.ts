@@ -3,6 +3,7 @@ import {User} from "../interfaces";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: "root"
@@ -10,8 +11,9 @@ import {tap} from "rxjs/operators";
 export class AuthService {
 
   private token = null;
+  private email = null
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   login(user: User): Observable<{ token: string }> {
@@ -24,6 +26,11 @@ export class AuthService {
           }
         )
       )
+  }
+
+  isAdmin() {
+    // @ts-ignore
+    return this.parseJwt(this.token)['roles'].includes('ADMIN_ROLE');
   }
 
   setToken(token: string) {
@@ -44,9 +51,32 @@ export class AuthService {
     // @ts-ignore
     this.setToken(null)
     localStorage.clear()
+    this.router.navigate(["/"])
   }
 
   register(user: User): Observable<User> {
     return this.http.post<User>('/api/auth/register', user)
   }
+
+  setEmail(email: string){
+    // @ts-ignore
+    this.email=email;
+  }
+
+  getEmail(){
+    return this.email;
+  }
+
+
+
+  parseJwt (token: string) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  };
+
 }

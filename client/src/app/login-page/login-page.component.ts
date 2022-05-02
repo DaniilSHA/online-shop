@@ -38,7 +38,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.form.disable();
     this.aSub = this.auth.login(this.form.value).subscribe(
-      () => this.router.navigate(["/overview"]), //redirect to main
+      () => {
+        this.router.navigate(["/overview"])
+        localStorage.setItem('email', this.form.value.email);
+      }, //redirect to main
       error => {
         console.warn(error)
         this.form.enable();
