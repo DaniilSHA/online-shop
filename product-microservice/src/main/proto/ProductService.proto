@@ -1,0 +1,57 @@
+syntax = "proto3";
+package com.example.grpc;
+
+message GetProductListRequest {}
+
+message GetProductListResponse {
+  repeated GetProductByIdResponse list = 1;
+}
+
+message GetProductByIdRequest {}
+
+message GetProductByIdResponse {
+  int64 id = 1;
+  string title = 2;
+  int64 price = 3;
+  bytes img = 4;
+}
+
+message DeleteProductByIdRequest {
+  int64 id = 1;
+}
+
+message DeleteProductByIdResponse {
+  bool result = 1;
+}
+
+message AddProductRequest {
+  int64 id = 1;
+  string title = 2;
+  int64 price = 3;
+  bytes img = 4;
+}
+
+message AddProductResponse {
+  bool result = 1;
+}
+
+message UpdateProductRequest {
+  int64 id = 1;
+  string title = 2;
+  int64 price = 3;
+  bytes img = 4;
+}
+
+message UpdateProductResponse {
+  bool result = 1;
+}
+
+service ProductService {
+
+  rpc getProductList(GetProductListRequest) returns (GetProductListResponse);
+  rpc getProductById(GetProductByIdRequest) returns (GetProductByIdResponse);
+  rpc deleteProductById(DeleteProductByIdRequest) returns (DeleteProductByIdResponse);
+  rpc addProduct(AddProductRequest) returns (AddProductResponse);
+  rpc updateProduct(UpdateProductRequest) returns (UpdateProductResponse);
+
+}

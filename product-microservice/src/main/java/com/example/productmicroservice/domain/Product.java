@@ -19,6 +19,9 @@ public class Product {
     private Long id;
     private String title;
     private BigDecimal price;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] img;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "products_categories",

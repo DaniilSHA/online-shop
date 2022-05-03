@@ -8,17 +8,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="authorization-microservice" />
+        <module name="gateway" />
         <module name="product-microservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="authorization-microservice" target="9" />
+      <module name="gateway" target="1.8" />
       <module name="product-microservice" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="authorization-microservice" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="product-microservice" options="-parameters" />
     </option>
   </component>
