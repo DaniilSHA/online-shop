@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/big-shop-auth</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="big-shop-products@localhost" uuid="aa89b570-2187-4359-b1bb-41af7a2bc24e">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/big-shop-products</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
