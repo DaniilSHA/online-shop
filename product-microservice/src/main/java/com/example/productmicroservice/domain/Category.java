@@ -2,6 +2,7 @@ package com.example.productmicroservice.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
+@Proxy(lazy = false)
 public class Category {
     private static final String SEQ_NAME = "category_seq";
     @Id
