@@ -4,7 +4,7 @@ package com.example.grpc;
 message GetProductListRequest {}
 
 message GetProductListResponse {
-  repeated GetProductByIdResponse list = 1;
+  repeated GetProductByIdResponse productList = 1;
 }
 
 message GetProductByIdRequest {

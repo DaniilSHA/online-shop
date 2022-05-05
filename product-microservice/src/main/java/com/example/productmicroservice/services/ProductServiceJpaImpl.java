@@ -5,6 +5,8 @@ import com.example.productmicroservice.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductServiceJpaImpl implements ProductService {
 
@@ -19,5 +21,10 @@ public class ProductServiceJpaImpl implements ProductService {
     @Override
     public Product getById(long id) {
         return productRepository.getById(id);
+    }
+
+    @Override
+    public List<Product> getProductsList() {
+        return productRepository.findAll();
     }
 }

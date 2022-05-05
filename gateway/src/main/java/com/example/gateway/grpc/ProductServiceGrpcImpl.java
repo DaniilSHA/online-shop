@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceGrpcImpl implements ProductService {
@@ -30,12 +32,26 @@ public class ProductServiceGrpcImpl implements ProductService {
 
         ProductServiceOuterClass.GetProductByIdResponse productByIdGrpcResponse = stub.getProductById(request);
 
+        return toProductDto(productByIdGrpcResponse);
+    }
+
+    public List<ProductDto> getProductsList() {
+
+        ProductServiceOuterClass.GetProductListRequest request = ProductServiceOuterClass.GetProductListRequest
+                .newBuilder()
+                .build();
+
+        ProductServiceOuterClass.GetProductListResponse productListResponse = stub.getProductList(request);
+        return productListResponse.getProductListList().stream().map(this::toProductDto).collect(Collectors.toList());
+
+    }
+
+    private ProductDto toProductDto (ProductServiceOuterClass.GetProductByIdResponse productByIdGrpcResponse){
         return new ProductDto(
                 productByIdGrpcResponse.getId(),
                 productByIdGrpcResponse.getTitle(),
                 BigDecimal.valueOf(productByIdGrpcResponse.getPrice()),
                 productByIdGrpcResponse.getImg().toByteArray(),
-                productByIdGrpcResponse.getCategoriesList()
-        );
+                productByIdGrpcResponse.getCategoriesList());
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +25,16 @@ public class ProductServiceGrpcImpl extends com.example.grpc.ProductServiceGrpc.
 
     @Override
     public void getProductList(ProductServiceOuterClass.GetProductListRequest request, StreamObserver<ProductServiceOuterClass.GetProductListResponse> responseObserver) {
-        super.getProductList(request, responseObserver);
+
+        List<Product> productList = productService.getProductsList();
+
+        ProductServiceOuterClass.GetProductListResponse response = ProductServiceOuterClass.GetProductListResponse
+                .newBuilder()
+                .addAllProductList(productList.stream().map(this::fromProduct).collect(Collectors.toList()))
+                .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -32,15 +42,7 @@ public class ProductServiceGrpcImpl extends com.example.grpc.ProductServiceGrpc.
 
         Product productById = productService.getById(request.getId());
 
-        ProductServiceOuterClass.GetProductByIdResponse response = ProductServiceOuterClass.GetProductByIdResponse
-                .newBuilder()
-                .setId(productById.getId() == null ? 0 : productById.getId())
-                .setPrice(productById.getPrice() == null ? 0 : productById.getPrice().longValue())
-                .setTitle(productById.getTitle() == null ? "" : productById.getTitle())
-                .setImg(ByteString.copyFrom(productById.getImg() == null ? new byte[] {} : productById.getImg()))
-                .addAllCategories(productById.getCategories() == null ?
-                       Collections.emptyList() : productById.getCategories().stream().map(Category::getId).collect(Collectors.toList()))
-                .build();
+        ProductServiceOuterClass.GetProductByIdResponse response = fromProduct(productById);
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -59,5 +61,17 @@ public class ProductServiceGrpcImpl extends com.example.grpc.ProductServiceGrpc.
     @Override
     public void updateProduct(ProductServiceOuterClass.UpdateProductRequest request, StreamObserver<ProductServiceOuterClass.UpdateProductResponse> responseObserver) {
         super.updateProduct(request, responseObserver);
+    }
+
+    private ProductServiceOuterClass.GetProductByIdResponse fromProduct(Product product) {
+        return ProductServiceOuterClass.GetProductByIdResponse
+                    .newBuilder()
+                    .setId(product.getId() == null ? 0 : product.getId())
+                    .setPrice(product.getPrice() == null ? 0 : product.getPrice().longValue())
+                    .setTitle(product.getTitle() == null ? "" : product.getTitle())
+                    .setImg(ByteString.copyFrom(product.getImg() == null ? new byte[]{} : product.getImg()))
+                    .addAllCategories(product.getCategories() == null ?
+                            Collections.emptyList() : product.getCategories().stream().map(Category::getId).collect(Collectors.toList()))
+                    .build();
     }
 }

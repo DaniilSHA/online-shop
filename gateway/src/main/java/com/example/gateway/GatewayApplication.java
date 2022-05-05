@@ -27,6 +27,7 @@ public class GatewayApplication {
         ProductServiceGrpcImpl testService = context.getBean("productServiceGrpcImpl", ProductServiceGrpcImpl.class);
         System.out.println(testService.findProductById(4L));
         System.out.println(testService.findProductById(5L));
+        System.out.println(testService.getProductsList());
     }
 
     @Bean
