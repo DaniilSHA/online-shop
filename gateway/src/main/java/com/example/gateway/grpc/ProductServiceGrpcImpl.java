@@ -51,7 +51,7 @@ public class ProductServiceGrpcImpl implements ProductService {
                 productByIdGrpcResponse.getId(),
                 productByIdGrpcResponse.getTitle(),
                 BigDecimal.valueOf(productByIdGrpcResponse.getPrice()),
-                productByIdGrpcResponse.getImg().toByteArray(),
+                ProductDto.imgBytesToBase64String(productByIdGrpcResponse.getImg().toByteArray()),
                 productByIdGrpcResponse.getCategoriesList());
     }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @Data
@@ -15,7 +16,7 @@ public class ProductDto {
     private Long id;
     private String title;
     private BigDecimal price;
-    private byte[] img;
+    private String img;
     private List<Long> categories;
 
     @Override
@@ -24,8 +25,12 @@ public class ProductDto {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", price=" + price +
-                ", img=" + Arrays.toString(img) +
+                ", img=" + img +
                 ", categories=" + categories +
                 '}';
+    }
+
+    public static String imgBytesToBase64String (byte[] bytes) {
+        return Base64.getEncoder().encodeToString(bytes);
     }
 }

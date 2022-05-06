@@ -6,7 +6,7 @@ type Query {
 type Product {
     id: ID!,
     title: String,
-    price: String,
+    price: Float,
     img: String,
-    categories : String
+    categories : [Long]
 }

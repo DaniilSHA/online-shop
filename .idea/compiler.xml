@@ -14,7 +14,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="authorization-microservice" target="9" />
-      <module name="gateway" target="1.8" />
+      <module name="gateway" target="9" />
       <module name="product-microservice" target="1.8" />
     </bytecodeTargetLevel>
   </component>
