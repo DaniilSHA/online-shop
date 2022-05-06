@@ -25,9 +25,9 @@ public class GatewayApplication {
         ConfigurableApplicationContext context = SpringApplication.run(GatewayApplication.class, args);
 
         ProductServiceGrpcImpl testService = context.getBean("productServiceGrpcImpl", ProductServiceGrpcImpl.class);
-        System.out.println(testService.findProductById(4L));
-        System.out.println(testService.findProductById(5L));
-        System.out.println(testService.getProductsList());
+//        System.out.println(testService.findProductById(4L));
+//        System.out.println(testService.findProductById(5L));
+//        System.out.println(testService.getProductsList());
     }
 
     @Bean
