@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ProductsResolver implements GraphQLQueryResolver {
+public class ProductServiceGraphQlResolver implements GraphQLQueryResolver {
 
     private ProductService productService;
 
     @Autowired
-    public ProductsResolver(ProductService productService) {
+    public ProductServiceGraphQlResolver(ProductService productService) {
         this.productService = productService;
     }
 
