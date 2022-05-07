@@ -1,0 +1,15 @@
+.product-card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-card {
+  flex: 0 0 auto;
+}
+
+.btn-add-product {
+  display: inline-block;
+  width: 150px;
+  height: 200px;
+  margin: 20px;
+}

@@ -11,6 +11,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./shared/classes/token.interceptor";
 import { ProductManagingComponent } from './product-managing/product-managing.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProductManagingComponent } from './product-managing/product-managing.co
     AuthLayoutComponent,
     SiteLayoutComponent,
     RegisterPageComponent,
-    ProductManagingComponent
+    ProductManagingComponent,
+    ProductCardComponent
   ],
   imports: [
     FormsModule,
