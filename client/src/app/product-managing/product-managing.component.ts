@@ -18,6 +18,9 @@ export class ProductManagingComponent implements OnInit {
   }
 
   private reloadProducts() : void {
-    this.productService.getProductList().subscribe(data => this.products = data);
+    this.productService.getProductList().subscribe(data => this.products = data)
+
+    // @ts-ignore
+    setTimeout(()=>console.log(this.products[5].img), 1000)
   }
 }

@@ -25,6 +25,8 @@ export class ProductService implements OnInit{
             id
             title
             price
+            categories
+            img
           }
         }`
     }).valueChanges.pipe(map(result => result.data.products));

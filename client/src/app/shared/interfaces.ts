@@ -7,6 +7,8 @@ export type Product = {
   id: number
   title: string,
   price: number
+  categories : [number]
+  img: string
 }
 
 export type Query = {
