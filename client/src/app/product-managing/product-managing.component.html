@@ -1,7 +1,7 @@
 <div class="container-fluid product-card-container">
 
-  <div class="product-card" *ngFor="let key of [1,2,2,2,2,2,2,2,2,2]">
-    <app-product-card [title]="'a'" [img]="'ss'" [price]="20"></app-product-card>
+  <div class="product-card" *ngFor="let product of products">
+    <app-product-card [title]="product.title" [img]="'ss'" [price]="product.price"></app-product-card>
   </div>
 
   <div class="product-card">

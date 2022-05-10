@@ -12,6 +12,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./shared/classes/token.interceptor";
 import { ProductManagingComponent } from './product-managing/product-managing.component';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { GraphQLModule } from './graphql.module';
+import {ApolloModule} from "apollo-angular";
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    GraphQLModule
   ],
   providers: [
     {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ProductService} from "../shared/services/product.service";
+import {Product} from "../shared/interfaces";
 
 @Component({
   selector: 'app-product-managing',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductManagingComponent implements OnInit {
 
-  constructor() { }
+  products!: [Product];
+
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.reloadProducts();
   }
 
+  private reloadProducts() : void {
+    this.productService.getProductList().subscribe(data => this.products = data);
+  }
 }
