@@ -28,9 +28,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     })
     this.route.queryParams.subscribe((params: Params) => {
       if (params['registered']) {
-        //now you can enter in system use your data
+        alert('now you can enter in system use your data')
       } else if (params['accessDenied']) {
-        //at first, you should make authorize
+        alert('at first, you should make authorize')
+      } else if (params['wrongLoginAndPassword']) {
+        alert('login / password incorrect')
       }
     })
   }
@@ -44,6 +46,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       }, //redirect to main
       error => {
         console.warn(error)
+        this.router.navigate(["/login"], {queryParams : {wrongLoginAndPassword: true}})
         this.form.enable();
       }
     )

@@ -39,6 +39,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
       },
       error => {
         console.warn(error)
+        alert("this email is busy")
         this.form.enable();
       }
     );
