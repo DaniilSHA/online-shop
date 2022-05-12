@@ -18,4 +18,7 @@ public class Category {
     private long id;
     private String title;
 
+    public Category(long id) {
+        this.id = id;
+    }
 }

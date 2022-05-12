@@ -1,6 +1,8 @@
 package com.example.productmicroservice.domain;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
@@ -15,6 +17,8 @@ import java.util.List;
 @Table(name = "products")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder()
 @Proxy(lazy = false)
 public class Product {
 

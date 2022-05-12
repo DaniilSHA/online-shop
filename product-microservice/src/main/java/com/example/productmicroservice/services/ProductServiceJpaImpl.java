@@ -27,4 +27,19 @@ public class ProductServiceJpaImpl implements ProductService {
     public List<Product> getProductsList() {
         return productRepository.findAll();
     }
+
+    @Override
+    public void deleteProduct(long id) {
+        productRepository.delete(getById(id));
+    }
+
+    @Override
+    public void addProduct(Product product) {
+        productRepository.saveAndFlush(product);
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        productRepository.saveAndFlush(product);
+    }
 }

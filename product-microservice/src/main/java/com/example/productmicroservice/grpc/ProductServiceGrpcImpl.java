@@ -9,6 +9,7 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,10 +40,13 @@ public class ProductServiceGrpcImpl extends com.example.grpc.ProductServiceGrpc.
 
     @Override
     public void getProductById(ProductServiceOuterClass.GetProductByIdRequest request, StreamObserver<ProductServiceOuterClass.GetProductByIdResponse> responseObserver) {
-
-        Product productById = productService.getById(request.getId());
-
-        ProductServiceOuterClass.GetProductByIdResponse response = fromProduct(productById);
+        ProductServiceOuterClass.GetProductByIdResponse response = null;
+        try {
+            Product productById = productService.getById(request.getId());
+            response = fromProduct(productById);
+        } catch (Exception e) {
+            response = fromProduct(new Product());
+        }
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -50,17 +54,51 @@ public class ProductServiceGrpcImpl extends com.example.grpc.ProductServiceGrpc.
 
     @Override
     public void deleteProductById(ProductServiceOuterClass.DeleteProductByIdRequest request, StreamObserver<ProductServiceOuterClass.DeleteProductByIdResponse> responseObserver) {
-        super.deleteProductById(request, responseObserver);
+
+        ProductServiceOuterClass.DeleteProductByIdResponse response = null;
+
+        try {
+            productService.deleteProduct(request.getId());
+            response = ProductServiceOuterClass.DeleteProductByIdResponse.newBuilder().setResult(true).build();
+        } catch (Exception e) {
+            response = ProductServiceOuterClass.DeleteProductByIdResponse.newBuilder().setResult(false).build();
+        }
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     @Override
     public void addProduct(ProductServiceOuterClass.AddProductRequest request, StreamObserver<ProductServiceOuterClass.AddProductResponse> responseObserver) {
-        super.addProduct(request, responseObserver);
+
+        ProductServiceOuterClass.AddProductResponse response = null;
+
+        try {
+            productService.addProduct(toProduct(request));
+            response = ProductServiceOuterClass.AddProductResponse.newBuilder().setResult(true).build();
+        } catch (Exception e) {
+            response = ProductServiceOuterClass.AddProductResponse.newBuilder().setResult(false).build();
+        }
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     @Override
     public void updateProduct(ProductServiceOuterClass.UpdateProductRequest request, StreamObserver<ProductServiceOuterClass.UpdateProductResponse> responseObserver) {
-        super.updateProduct(request, responseObserver);
+
+        ProductServiceOuterClass.UpdateProductResponse response = null;
+
+        try {
+            productService.updateProduct(toProduct(request));
+            response = ProductServiceOuterClass.UpdateProductResponse.newBuilder().setResult(true).build();
+        } catch (Exception e) {
+            response = ProductServiceOuterClass.UpdateProductResponse.newBuilder().setResult(false).build();
+        }
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+
     }
 
     private ProductServiceOuterClass.GetProductByIdResponse fromProduct(Product product) {
@@ -73,5 +111,25 @@ public class ProductServiceGrpcImpl extends com.example.grpc.ProductServiceGrpc.
                     .addAllCategories(product.getCategories() == null ?
                             Collections.emptyList() : product.getCategories().stream().map(Category::getId).collect(Collectors.toList()))
                     .build();
+    }
+
+    private Product toProduct (ProductServiceOuterClass.AddProductRequest request) {
+        return Product.builder()
+                .id(request.getId())
+                .price(BigDecimal.valueOf(request.getPrice()))
+                .title(request.getTitle())
+                .img(request.getImg().toByteArray())
+                .categories(request.getCategoriesList().stream().map(Category::new).collect(Collectors.toList()))
+                .build();
+    }
+
+    private Product toProduct (ProductServiceOuterClass.UpdateProductRequest request) {
+        return Product.builder()
+                .id(request.getId())
+                .price(BigDecimal.valueOf(request.getPrice()))
+                .title(request.getTitle())
+                .img(request.getImg().toByteArray())
+                .categories(request.getCategoriesList().stream().map(Category::new).collect(Collectors.toList()))
+                .build();
     }
 }
