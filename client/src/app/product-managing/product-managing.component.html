@@ -1,7 +1,7 @@
 <div class="container-fluid product-card-container">
 
   <div class="product-card" *ngFor="let product of products">
-    <app-product-card [title]="product.title" [img]="imagePath" [price]="product.price"></app-product-card>
+    <app-product-card [title]="product.title" [imgInBase64String]="product.img" [price]="product.price"></app-product-card>
   </div>
 
   <div class="product-card">

@@ -23,10 +23,6 @@ export class ProductManagingComponent implements OnInit {
   private reloadProducts() : void {
     this.productService.getProductList().subscribe(data => this.products = data)
 
-    // // @ts-ignore
-    // setTimeout(()=>console.log(this.products[8].img), 1000)
-    // // @ts-ignore
-    // setTimeout(()=>console.log(this.products[8].id), 1000)
 
 
     setTimeout(()=> {
@@ -34,7 +30,7 @@ export class ProductManagingComponent implements OnInit {
       this.imagePath = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + this.products[8].img));
       // @ts-ignore
       // console.log(this.products[8].img)
-      console.log(this.imagePath)
+      // console.log(this.imagePath)
     }, 1000)
 
 
